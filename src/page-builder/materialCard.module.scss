@@ -1,0 +1,17 @@
+.material-card {
+  margin-bottom: 8px;
+}
+
+.material-card:hover {
+  cursor: pointer;
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.preview {
+  font-size: 10px;
+  color: rgb(27, 146, 251);
+}

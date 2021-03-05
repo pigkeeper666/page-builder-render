@@ -1,0 +1,13 @@
+.outside-container {
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.up-part {
+  height: 72px;
+}
+
+.bottom-part {
+  padding: 10px;
+  height: calc(100vh - 72px);
+}
