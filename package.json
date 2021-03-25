@@ -7,10 +7,14 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.13.0",
+    "lodash": "^4.17.21",
     "node-sass": "^5.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-scripts": "4.0.3",
+    "react-sortablejs": "^6.0.0",
+    "sortablejs": "^1.13.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -36,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/sortablejs": "^1.10.6"
   }
 }

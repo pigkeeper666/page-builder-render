@@ -6,7 +6,7 @@ const Header = () => (
     <PageHeader
       onBack={() => null}
       title="前端页面搭建器"
-      subTitle="Page Builder"
+      subTitle="Page Builder formed by MrPiggy"
       extra={[
         <Button key="3">预览</Button>,
         <Button key="2">发布</Button>,

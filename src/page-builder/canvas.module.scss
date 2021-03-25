@@ -1,0 +1,28 @@
+.chosen-item {
+  position: relative;
+  border: 3px solid rgb(27, 146, 251) !important;
+  cursor: move;
+}
+
+.delete-icon-warpper {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  cursor: pointer;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.inherit-min-height {
+  min-height: inherit;
+  width: 100%;
+  display: inherit;
+}
+
+.tool-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+

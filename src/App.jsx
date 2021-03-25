@@ -25,7 +25,7 @@ function App() {
           <Canvas />
         </Col>
         <Col span={4}>
-          <RightBar/>
+          <RightBar />
         </Col>
       </Row>
     </div>
