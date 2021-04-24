@@ -1,0 +1,30 @@
+.container {
+  height: 100vh;
+  margin: 0 auto;
+  background-color: '#f5f5f5';
+}
+
+.footer {
+  height: 175px;
+  line-height: 72px;
+  text-align: center;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 450;
+  margin-left: -5px;
+}
+
+.content {
+  width: 100%;
+  height: calc(100vh - 175px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-text {
+  font-size: 13px;
+  color: #646a73;
+}

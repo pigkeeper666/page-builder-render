@@ -1,10 +1,10 @@
-import Header from './page-builder/Header'
-import LeftBar from './page-builder/LeftBar'
-import Canvas from './page-builder/Canvas'
-import RightBar from './page-builder/RightBar'
+import Header from './Header'
+import LeftBar from './LeftBar'
+import Canvas from './Canvas'
+import RightBar from './RightBar'
 import { Row, Col } from 'antd';
 import 'antd/dist/antd.css';
-import styles from './App.module.scss';
+import styles from './PageEditor.module.scss';
 
 function App() {
   return (

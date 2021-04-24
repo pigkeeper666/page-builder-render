@@ -5,6 +5,8 @@ import Grid from './Material/Grid'
 import Tcol from './Material/Tcol'
 import Text from './Material/Text'
 import Button from './Material/Button'
+import Form from './Material/Form';
+import FormInput from './Material/FormItem/FormInput'
 
 
 
@@ -427,7 +429,56 @@ export const mockData = [
         type: 'String',
       },
     ]
-  }
+  },
+  {
+    id: uuidv4(),
+    name: 'Form',
+    description: '表单容器',
+    attr: {
+      targetApi: '',
+      name: 'basic',
+    },
+    editor: [
+      {
+        attrName: 'name',
+        label: '表单名称',
+        type: 'String',
+      },
+      {
+        attrName: 'targetApi',
+        label: '提交表单地址',
+        type: 'String',
+      },
+    ],
+    children: [],
+  },
+  {
+    id: uuidv4(),
+    name: 'FormInput',
+    description: '表单项-输入框',
+    attr: {
+      label: '表单项',
+      name: 'name',
+      rules: [{ required: true, message: '请输入' }]
+    },
+    editor: [
+      {
+        attrName: 'label',
+        label: '名称',
+        type: 'String',
+      },
+      {
+        attrName: 'name',
+        label: '表单项标识',
+        type: 'String',
+      },
+      {
+        attrName: 'rules',
+        label: '校验规则',
+        type: 'String',
+      }
+    ]
+  },
 ]
 
 export const materialMap = {
@@ -439,4 +490,6 @@ export const materialMap = {
   'Divider': Divider,
   'Button': Button,
   'Image': Image,
+  'Form': Form,
+  'FormInput': FormInput,
 }

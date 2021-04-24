@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Card } from 'antd';
+import { Card, message } from 'antd';
 import { DeleteOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { useHistory } from "react-router-dom";
 import { ReactSortable } from "react-sortablejs";
 import { materialMap } from './mock'
+import PageRender from '../page-render'
+import request from '../request'
 import eventEmitter from '../Event'
 import styles from './canvas.module.scss'
 
@@ -61,16 +64,47 @@ const deleteItem = (originArr, targetId) => {
 const Canvas = (props) => {
   const [list, setList] = useState([]);
   const [currentChosenItem, setCurrentChosenItem] = useState({})
+  const history = useHistory()
+  const pageId = history.location.state.pageId
 
   useEffect(() => {
-    const handler = (params) => {
+    request.post('/api/getJson', {
+      pageId,
+    })
+      .then((res) => {
+        console.log(res.data)
+        const arr = JSON.parse(res?.data?.pageJson)
+        setList(arr || [])
+      })
+      .catch((err) => message.error('出错了'))
+  }, [pageId])
+
+  // 事件注册
+  useEffect(() => {
+    const attrHandler = (params) => {
       const { id } = currentChosenItem
       const finalList = updateAttr(list, id, params.attr)
       setList(finalList)
     }
-    eventEmitter.on('attribute-change', handler)
+    const saveHandler = () => {
+      request.post('/api/saveJson', {
+        pageId,
+        json: JSON.stringify(list),
+      })
+        .then((res) => {
+          message.success('保存成功')
+        })
+        .catch((err) => message.error('出错了'))
+    }
+  
+    // 监听属性改变
+    eventEmitter.on('attribute-change', attrHandler)
+    // 监听按钮 传输数据
+    eventEmitter.on('save', saveHandler)
+
     return () => {
-      eventEmitter.off('attribute-change', handler)
+      eventEmitter.off('attribute-change', attrHandler)
+      eventEmitter.off('save', saveHandler)
     }
   }, [list, currentChosenItem])
 
@@ -143,7 +177,9 @@ const Canvas = (props) => {
 
   const renderTitle = () => {
     return (
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <div
+       style={{display: 'flex', justifyContent: 'space-between'}}
+      >
         <span>预览</span>
         <div>
           <span className={styles['tool-icon']} onClick={(evt) => handleDelete(evt, currentChosenItem)}><DeleteOutlined /></span>
@@ -155,6 +191,7 @@ const Canvas = (props) => {
 
   return (
     <div className={styles['full-height']}>
+      {/* <PageRender list={list}/> */}
       <Card
         title={renderTitle()}
         bodyStyle={{height: '100%'}}
