@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useHistory } from "react-router-dom";
 import request from '../request'
 import { Input, Form, Button, message } from 'antd'

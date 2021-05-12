@@ -18,13 +18,13 @@ function App() {
         className={styles['bottom-part']}
         gutter={8}
       >
-        <Col span={4}>
+        <Col span={4} className={styles['bottom-col']}>
           <LeftBar />
         </Col>
-        <Col span={16}>
+        <Col span={16} className={styles['bottom-col']}>
           <Canvas />
         </Col>
-        <Col span={4}>
+        <Col span={4} className={styles['bottom-col']}>
           <RightBar />
         </Col>
       </Row>

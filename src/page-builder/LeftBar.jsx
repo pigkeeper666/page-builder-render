@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Card } from 'antd';
 import MateialList from './MaterialList'
 import Outline from './Outline'
-import styles from './leftbar.module.scss'
+import styles from './Leftbar.module.scss'
 
 const tabList = [
   {
@@ -28,8 +28,8 @@ const LeftBar = () => {
       <Card
         className={styles['card']}
         tabList={tabList}
-        headStyle={{fontSize: 8}}
-        bodyStyle={{ padding: 5}}
+        headStyle={{fontSize: 8, height: 58}}
+        bodyStyle={{padding: 5, overflow: 'scroll', height: 'calc(100% - 48px)'}}
         tabProps={{
           centered: true,
         }}

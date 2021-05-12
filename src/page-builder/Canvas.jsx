@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Card, message } from 'antd';
+import { Card, message, Drawer } from 'antd';
 import { DeleteOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
 import { ReactSortable } from "react-sortablejs";
-import { materialMap } from './mock'
-import PageRender from '../page-render'
+import { componentMap } from 'piggy-components'
+import { PageRenderSDK } from 'piggy-page-render'
 import request from '../request'
 import eventEmitter from '../Event'
-import styles from './canvas.module.scss'
+import styles from './Canvas.module.scss'
 
 // 在list中找到id为targetId的item，将其children属性设为replaceContent
 const searchAndReplace = (originArr, targetId, replaceContent) => {
@@ -63,6 +63,7 @@ const deleteItem = (originArr, targetId) => {
 
 const Canvas = (props) => {
   const [list, setList] = useState([]);
+  const [previewVisible, setPreviewVisible] = useState(false)
   const [currentChosenItem, setCurrentChosenItem] = useState({})
   const history = useHistory()
   const pageId = history.location.state.pageId
@@ -72,7 +73,6 @@ const Canvas = (props) => {
       pageId,
     })
       .then((res) => {
-        console.log(res.data)
         const arr = JSON.parse(res?.data?.pageJson)
         setList(arr || [])
       })
@@ -86,6 +86,7 @@ const Canvas = (props) => {
       const finalList = updateAttr(list, id, params.attr)
       setList(finalList)
     }
+
     const saveHandler = () => {
       request.post('/api/saveJson', {
         pageId,
@@ -97,16 +98,22 @@ const Canvas = (props) => {
         .catch((err) => message.error('出错了'))
     }
   
+    const previewHandler = () => {
+      setPreviewVisible(true)
+    }
+
     // 监听属性改变
     eventEmitter.on('attribute-change', attrHandler)
     // 监听按钮 传输数据
     eventEmitter.on('save', saveHandler)
+    // 监听按钮 预览页面
+    eventEmitter.on('preview', previewHandler)
 
     return () => {
       eventEmitter.off('attribute-change', attrHandler)
       eventEmitter.off('save', saveHandler)
     }
-  }, [list, currentChosenItem])
+  }, [list, currentChosenItem, pageId])
 
 
   const handleSetList = (partList, parentId) => {
@@ -139,7 +146,7 @@ const Canvas = (props) => {
   const renderComponent = (arr) => {
     return (
       arr?.map(item => {
-        const Component = materialMap[item.name]
+        const Component = componentMap[item.name]
         const isChosen = item.id === currentChosenItem.id
         const injetctParentId = item.id
         if (!item.children) {
@@ -149,6 +156,7 @@ const Canvas = (props) => {
               className={isChosen ? styles['chosen-item'] : ''}
               {...item.attr}
               key={item.id}
+              mode="edit"
             />
           )
         }
@@ -157,6 +165,7 @@ const Canvas = (props) => {
               key={item.id}
               onClick={(evt) => handleChosen(evt, item, injetctParentId)}
               className={isChosen ? styles['chosen-item'] : ''}
+              mode="edit"
               {...item.attr}
             >
               <ReactSortable
@@ -180,7 +189,7 @@ const Canvas = (props) => {
       <div
        style={{display: 'flex', justifyContent: 'space-between'}}
       >
-        <span>预览</span>
+        <span>拖拽画布</span>
         <div>
           <span className={styles['tool-icon']} onClick={(evt) => handleDelete(evt, currentChosenItem)}><DeleteOutlined /></span>
           <span className={styles['tool-icon']}><FullscreenOutlined /></span>
@@ -191,10 +200,10 @@ const Canvas = (props) => {
 
   return (
     <div className={styles['full-height']}>
-      {/* <PageRender list={list}/> */}
       <Card
         title={renderTitle()}
-        bodyStyle={{height: '100%'}}
+        headStyle={{height: 58}}
+        bodyStyle={{padding: 12, overflow: 'scroll', height: 'calc(100% - 58px)'}}
         className={styles['full-height']}
       >
         <ReactSortable
@@ -208,8 +217,19 @@ const Canvas = (props) => {
           {renderComponent(list)}
         </ReactSortable>
       </Card>
+      <Drawer
+        destroyOnClose
+        title="页面预览"
+        placement="bottom"
+        closable={true}
+        onClose={() => setPreviewVisible(false)}
+        visible={previewVisible}
+        height="90vh"
+        key="bottom"
+      >
+        <PageRenderSDK list={list}/>
+      </Drawer>
     </div>
-
   )
 };
 

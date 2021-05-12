@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   BrowserRouter as Router,
   Redirect,
@@ -9,16 +8,14 @@ import PageEditor from './page-builder/PageEditor.'
 import Login from './login/Login'
 import Home from './home'
 
-const BasicRouter = () => {
-  const [loginInfo, setLoginInfo] = useState(null)
-  return (
+const BasicRouter = () => (
     <Router>
       <Switch>
         <Route exact path='/editor'>
            <PageEditor />
         </Route>
         <Route exact path='/login'>
-          <Login setLoginInfo={setLoginInfo}/>
+          <Login />
         </Route>
         <Route exact path='/home'>
            <Home />
@@ -28,7 +25,6 @@ const BasicRouter = () => {
         )} />
       </Switch>
     </Router>
-  )
-}
+)
 
 export default BasicRouter

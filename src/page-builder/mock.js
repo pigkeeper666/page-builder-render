@@ -7,6 +7,7 @@ import Text from './Material/Text'
 import Button from './Material/Button'
 import Form from './Material/Form';
 import FormInput from './Material/FormItem/FormInput'
+import Table from './Material/Table'
 
 
 
@@ -395,6 +396,10 @@ export const mockData = [
     attr: {
       value: '默认按钮',
       type: 'primary',
+      eventType: 'refresh',
+      componentName: null,
+      jumpUrl: null,
+      formName: null,
     },
     editor: [
       {
@@ -406,6 +411,51 @@ export const mockData = [
         attrName: 'type',
         label: '按钮类型',
         type: 'String',
+      },
+      {
+        attrName: 'eventType',
+        label: '事件类型',
+        type: 'Enum',
+        datasource: [{
+          key: 'none',
+          name: '无',
+        },{
+          key: 'refresh',
+          name: '数据刷新',
+        },{
+          key: 'jump',
+          name: '路由跳转',
+        },{
+          key: 'modal',
+          name: '控制弹框',
+        }],
+      },
+      {
+        attrName: 'componentName',
+        label: '组件名称',
+        type: 'Relate',
+        when: [{
+          key: 'eventType',
+          value: 'refresh'
+        }]
+      },
+      {
+        attrName: 'jumpUrl',
+        label: '跳转地址',
+        type: 'Relate',
+        when: [{
+          key: 'eventType',
+          value: 'jump'
+        }]
+      },
+      {
+        attrName: 'formName',
+        label: '表单名称',
+        type: 'Relate',
+        when: [{
+          key: 'eventType',
+          value: 'modal'
+        }]
       }
     ]
   },
@@ -479,6 +529,21 @@ export const mockData = [
       }
     ]
   },
+  {
+    id: uuidv4(),
+    name: 'Table',
+    description: '表格',
+    attr: {
+      tableName: 'defaultTable',
+    },
+    editor: [
+      {
+        attrName: 'tableName',
+        label: '表格名称',
+        type: 'String',
+      },
+    ]
+  },
 ]
 
 export const materialMap = {
@@ -492,4 +557,5 @@ export const materialMap = {
   'Image': Image,
   'Form': Form,
   'FormInput': FormInput,
+  'Table': Table,
 }

@@ -11,4 +11,10 @@
 .bottom-part {
   padding: 10px;
   height: calc(100vh - 72px);
+  overflow: hidden;
+}
+
+.bottom-col {
+  height: 100%;
+  overflow: hidden;
 }

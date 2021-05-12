@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Card, Button, Input } from 'antd';
-import { mockData } from './mock'
+import { Card } from 'antd';
 import { EDITOR_MAP } from './WrappedComponent'
 import eventEmitter from '../Event'
-import styles from './leftbar.module.scss'
+import styles from './Leftbar.module.scss'
 
 const RightBar = (props) => {
   const [currentComponent, setCurrentComponent] = useState({})
@@ -19,24 +18,25 @@ const RightBar = (props) => {
     setCurrentComponent(params)
   }
 
-  const setAttributes = (evt, attrName, isStyle) => {
+  const setAttributes = (val, attrName, isStyle) => {
     const { attr } = currentComponent
-    const copy = Object.assign(currentComponent, {})
+    const copy = {...currentComponent}
     if (isStyle) {
       const { style } = attr
       copy.attr = {
         ...attr,
         style: {
           ...style,
-          [attrName]: evt.target.value
+          [attrName]: val
         }
       }
     } else {
       copy.attr = {
         ...attr,
-        [attrName]: evt.target.value,
+        [attrName]: val,
       }
     }
+    setCurrentComponent(copy)
     eventEmitter.emit('attribute-change', copy)
   }
 
@@ -45,12 +45,14 @@ const RightBar = (props) => {
     if (editor && Array.isArray(editor)) {
       return (
         <div key={currentComponent.id}>
-          <h4>{currentComponent.name}</h4>
           {
             editor.map(item => {
               const Component = EDITOR_MAP[item.type]
               return (
-                <div key={`${currentComponent.id}${item.attrName}`}>
+                <div
+                  key={`${currentComponent.id}${item.attrName}`}
+                  style={{ marginBottom: 10 }}
+                >
                   <Component
                     label={item.label}
                     attr={attr}
@@ -70,11 +72,12 @@ const RightBar = (props) => {
   return (
     <div className={styles['left-bar']}>
       <Card
-        title="属性区域"
+        title={currentComponent?.name || "属性区域"}
+        bodyStyle={{padding: 12, overflow: 'scroll', height: 'calc(100% - 58px)'}}
         className={styles['card']}
       >
         {renderEditor()}
-        {JSON.stringify(currentComponent)}
+        {/* {JSON.stringify(currentComponent)} */}
       </Card>
     </div>
   )

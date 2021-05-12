@@ -1,6 +1,5 @@
-
 import { useState } from 'react'
-import { Layout, Menu, Breadcrumb, Avatar, PageHeader, Button } from 'antd';
+import { Layout, Menu, Avatar, PageHeader } from 'antd';
 import { useHistory } from "react-router-dom";
 import {
   DesktopOutlined,
@@ -11,23 +10,17 @@ import PageManager from './PageManage'
 import icon from '../public-assets/icon.png'
 import styles from './index.module.scss'
 
-const { Content, Sider, Footer } = Layout;
+const { Content, Sider } = Layout;
 
 const MENU_INFO = [
   {
     key: 'page',
     label: '页面管理',
     icon: <PieChartOutlined />,
-  },
-  {
-    key: 'datasource',
-    label: '数据源管理',
-    icon: <DesktopOutlined />,
   }
 ]
 
 const Home = (props) => {
-  const { loginInfo } = props
   const history = useHistory()
   const [current, setCurrent] = useState('page')
 
@@ -42,9 +35,9 @@ const Home = (props) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-        <Sider>
+        {/* <Sider>
           <div className={styles['logo']} >
-            <img src={icon} height={64}/>
+            <img src={icon} height={64} alt="hi"/>
           </div>
           <Menu 
             theme="dark"
@@ -58,7 +51,7 @@ const Home = (props) => {
               </Menu.Item>
             ))}
           </Menu>
-        </Sider>
+        </Sider> */}
         <Layout className="site-layout">
           <PageHeader
             onBack={handleLogOut}

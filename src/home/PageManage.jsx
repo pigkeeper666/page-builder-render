@@ -69,6 +69,7 @@ const PageManage = () => {
     setLoading(true)
     request.get('/api/getPageList')
       .then((res) => {
+        console.log('请求res', res)
         setDatasource(res.data)
       })
       .catch((err) => {message.error('出错了')})
@@ -172,7 +173,6 @@ const PageManage = () => {
           preserve={false}
           form={form}
           {...layout}
-          initialValues={{ remember: true }}
           initialValues={{
             'pageStatus': true,
           }}

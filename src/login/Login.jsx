@@ -8,11 +8,11 @@ const Login = (props) => {
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
-          <img src={pic} alt="example"></img>
+          <img src={pic} alt="pic" height="90%"></img>
           <LoginCard/>
       </div>
       <div className={styles['footer']}>
-        <img src={icon} height={72}/>
+        <img src={icon} height={72} alt="pic"/>
         <span className={styles['title']}>前端页面搭建器</span>
         <div className={styles['bottom-text']}>
           <span>物料组件库</span>

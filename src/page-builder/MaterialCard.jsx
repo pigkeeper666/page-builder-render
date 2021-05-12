@@ -1,6 +1,6 @@
 import { Card, Popover, Avatar } from 'antd';
 import { AntDesignOutlined } from '@ant-design/icons';
-import styles from './materialCard.module.scss'
+import styles from './MaterialCard.module.scss'
 
 const { Meta } = Card
 

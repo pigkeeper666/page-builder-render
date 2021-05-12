@@ -1,14 +1,10 @@
 import { useState } from 'react'
-import { Card, Popover } from 'antd';
 import MaterialCard from './MaterialCard'
 import { ReactSortable } from "react-sortablejs";
-import { mockData, materialMap } from './mock'
+import { wholeComponentInfo } from 'piggy-components'
 import { v4 as uuidv4 } from 'uuid';
-import { PictureTwoTone, MoreOutlined, EllipsisOutlined } from '@ant-design/icons';
 
 const MaterialList = (props) => {
-  const [state, setState] = useState(mockData);
-
   // 将组件的id全部改变一次
   const changeId = (children) => {
     if (children) {
@@ -27,6 +23,8 @@ const MaterialList = (props) => {
     changeId(currentItem.children)
     return currentItem
   }
+
+  const [state, setState] = useState(wholeComponentInfo.map(i => handleClone(i)));
 
   return (
     <div>
