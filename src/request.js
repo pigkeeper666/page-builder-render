@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-  baseURL: 'http://127.0.0.1:3005'
+  baseURL: 'http://1.15.135.140:3005'
 })
 
 // 添加拦截

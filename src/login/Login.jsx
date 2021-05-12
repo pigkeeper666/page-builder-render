@@ -1,18 +1,20 @@
 import { Divider} from 'antd';
 import LoginCard from './LoginCard'
-import pic from '../public-assets/ira_gallery.png'
-import icon from '../public-assets/icon.png'
+// import pic from './ira_gallery.png'
+// import icon from './icon.png'
+// import pic from '../../public/ira_gallery.png'
+// import icon from '../../public/icon.png'
 import styles from './Login.module.scss'
 
 const Login = (props) => {
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
-          <img src={pic} alt="pic" height="90%"></img>
+          <img src="http://1.15.135.140:3005/images/ira_gallery.png" alt="pic" height="90%"></img>
           <LoginCard/>
       </div>
       <div className={styles['footer']}>
-        <img src={icon} height={72} alt="pic"/>
+        <img src="http://1.15.135.140:3005/images/icon.png" height={72} alt="pic"/>
         <span className={styles['title']}>前端页面搭建器</span>
         <div className={styles['bottom-text']}>
           <span>物料组件库</span>

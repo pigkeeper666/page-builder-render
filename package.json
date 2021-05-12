@@ -48,5 +48,5 @@
   "devDependencies": {
     "@types/sortablejs": "^1.10.6"
   },
-  "proxy": "http://127.0.0.1:3005"
+  "homepage":"./"
 }
