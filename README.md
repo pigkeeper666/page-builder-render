@@ -1,7 +1,2 @@
-# page-builder-render
 
-Todo:
-- builder
-- render
-- cli
-- login
+yarn install && yarn start
