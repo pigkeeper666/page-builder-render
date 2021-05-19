@@ -8501,10 +8501,10 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-piggy-components@^1.0.22:
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/piggy-components/-/piggy-components-1.0.22.tgz#e831c2e76e74068c538513e5a6035a293e9a850f"
-  integrity sha512-L6RUDe6kZx/DXZEXVdhdm6pYo30Q6Jw5Z6YGt258vzOTC5MMafoTsnViu/3b+bTKNs52SDINruje0SvOzK7WWQ==
+piggy-components@^1.0.23:
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/piggy-components/-/piggy-components-1.0.23.tgz#38a9789f6cfc7e912bd5fb27b8b13df6dcd4949d"
+  integrity sha512-WwW3xB+LsCoqLyTXPLGMd8U/4yGnmYHwuGovzF5cZRWt+fjfpuV+zHFXyllu9L2ypqve5F+14qDSx5kUDCI+tg==
   dependencies:
     "@types/uuid" "^8.3.0"
     antd "^4.15.3"
@@ -8516,12 +8516,12 @@ piggy-components@^1.0.22:
     react-router-dom "^5.2.0"
     uuid "^8.3.2"
 
-piggy-page-render@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/piggy-page-render/-/piggy-page-render-1.0.7.tgz#0d809275e964f653d70f9509e8d72a3f65838976"
-  integrity sha512-T+S0qLPg9hTzqPAWuXvE1eoiYODixp3Ish0U89M3jnRI01vR65kZnwtAuH5U+z1W29pvQeRw+5JXM9w5Lr6lQQ==
+piggy-page-render@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/piggy-page-render/-/piggy-page-render-1.0.8.tgz#3bd5fb681cc50b301ce0e161b4b3b991a6eb9ae5"
+  integrity sha512-k/tQHwWNZzGR/lr28tzGnbe0fZSjpjnhu2bC6FeHEY7+p58ujyOAYtfNQOWOGEzD20aSSK8Yd92wM/UjwQ6e6w==
   dependencies:
-    piggy-components "^1.0.22"
+    piggy-components "^1.0.23"
     react "^16.12.0"
 
 pinkie-promise@^2.0.0:

@@ -13,7 +13,7 @@ const Header = () => {
         subTitle="Page Builder formed by MrPiggy"
         extra={[
           <Button key="3" onClick={() => eventEmitter.emit('preview')}>预览</Button>,
-          <Button key="2">发布</Button>,
+          // <Button key="2">发布</Button>,
           <Button key="1" type="primary" onClick={() => eventEmitter.emit('save')}>
             保存
           </Button>,

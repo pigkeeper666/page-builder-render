@@ -11,7 +11,6 @@ const radioStyle = {
 const WrappedEnumEditor = (props) => {
   const {label, attr, editor, handleChange} = props
   const onChange = checked => {
-    console.log('che', editor.attrName,checked)
     handleChange(checked, editor.attrName)
   };
 

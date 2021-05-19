@@ -9,6 +9,21 @@ import request from '../request'
 import eventEmitter from '../Event'
 import styles from './Canvas.module.scss'
 
+// 在list中找到id为targetId的item，并返回这个对象
+const search = (originArr, targetId) => {
+  const arr = [].concat(originArr)
+  for (let i = 0 ; i < arr.length; i++) {
+    const item = arr[i]
+    if (item.id === targetId) {
+      return item
+    }
+    if (item.children) {
+      const result = search(item.children, targetId)
+      if (result) return result
+    }
+  }
+}
+
 // 在list中找到id为targetId的item，将其children属性设为replaceContent
 const searchAndReplace = (originArr, targetId, replaceContent) => {
   if (!targetId) {
@@ -19,26 +34,27 @@ const searchAndReplace = (originArr, targetId, replaceContent) => {
     const item = arr[i]
     if (item.id === targetId) {
       item.children = replaceContent
-      return arr
+      // return arr
+      break
     }
     if (item.children) {
-      searchAndReplace(item.children, targetId, replaceContent)
+      item.children =searchAndReplace(item.children, targetId, replaceContent)
     }
   }
   return arr
 }
 
-// 在list中找到id为targetId的item，将其attr属性设为replaceContent
+// 在originArr中找到id为targetId的item，将其attr属性设为replaceContent
 const updateAttr = (originArr, targetId, replaceContent) => {
   const arr = [].concat(originArr)
   for (let i = 0 ; i < arr.length; i++) {
     const item = arr[i]
     if (item.id === targetId) {
       item.attr = replaceContent
-      return arr
+      break
     }
     if (item.children) {
-      updateAttr(item.children, targetId, replaceContent)
+      item.children = updateAttr(item.children, targetId, replaceContent)
     }
   }
   return arr
@@ -67,6 +83,11 @@ const Canvas = (props) => {
   const [currentChosenItem, setCurrentChosenItem] = useState({})
   const history = useHistory()
   const pageId = history.location.state.pageId
+  // 包装了一层的setList
+  const finalSetList = (list) => {
+    setList(list)
+    eventEmitter.emit('list-change', list)
+  }
 
   useEffect(() => {
     request.post('/api/getJson', {
@@ -74,7 +95,7 @@ const Canvas = (props) => {
     })
       .then((res) => {
         const arr = JSON.parse(res?.data?.pageJson)
-        setList(arr || [])
+        finalSetList(arr || [])
       })
       .catch((err) => message.error('出错了'))
   }, [pageId])
@@ -84,7 +105,7 @@ const Canvas = (props) => {
     const attrHandler = (params) => {
       const { id } = currentChosenItem
       const finalList = updateAttr(list, id, params.attr)
-      setList(finalList)
+      finalSetList(finalList)
     }
 
     const saveHandler = () => {
@@ -101,6 +122,16 @@ const Canvas = (props) => {
     const previewHandler = () => {
       setPreviewVisible(true)
     }
+    
+    const outLineHandler = () => {
+      eventEmitter.emit('list-change', list)
+    }
+
+    const outLineSelectHandler = (id) => {
+      const obj = search(list, id) || {}
+      setCurrentChosenItem(obj)
+      eventEmitter.emit('item-chosen', obj)
+    }
 
     // 监听属性改变
     eventEmitter.on('attribute-change', attrHandler)
@@ -108,17 +139,23 @@ const Canvas = (props) => {
     eventEmitter.on('save', saveHandler)
     // 监听按钮 预览页面
     eventEmitter.on('preview', previewHandler)
+    // 监听大纲 取数据
+    eventEmitter.on('get-list', outLineHandler)
+    // 监听大纲 选择了某个item
+    eventEmitter.on('outline-select', outLineSelectHandler)
 
     return () => {
       eventEmitter.off('attribute-change', attrHandler)
       eventEmitter.off('save', saveHandler)
+      eventEmitter.off('preview', previewHandler)
+      eventEmitter.off('get-list', outLineHandler)
+      eventEmitter.off('outline-select', outLineSelectHandler)
     }
   }, [list, currentChosenItem, pageId])
 
-
   const handleSetList = (partList, parentId) => {
     const finalList = searchAndReplace(list, parentId, partList)
-    setList(finalList)
+    finalSetList(finalList)
   }
 
   // 选中Item
@@ -137,7 +174,7 @@ const Canvas = (props) => {
     if (evt.stopPropagation) {
       evt.stopPropagation()
     }
-    setList(deleteItem(list, obj.id))
+    finalSetList(deleteItem(list, obj.id))
     setCurrentChosenItem(obj)
     eventEmitter.emit('item-chosen', {})
   }
@@ -192,7 +229,7 @@ const Canvas = (props) => {
         <span>拖拽画布</span>
         <div>
           <span className={styles['tool-icon']} onClick={(evt) => handleDelete(evt, currentChosenItem)}><DeleteOutlined /></span>
-          <span className={styles['tool-icon']}><FullscreenOutlined /></span>
+          {/* <span className={styles['tool-icon']}><FullscreenOutlined /></span> */}
         </div>
       </div>
     )

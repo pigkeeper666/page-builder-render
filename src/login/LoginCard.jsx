@@ -20,7 +20,6 @@ const Login = (props) => {
 
   const onFinish = async (values) => {
     setLoading(true)
-    console.log(values);
     const rst = await request.post('/login', {
       ...values
     })
@@ -31,7 +30,6 @@ const Login = (props) => {
     } else {
       message.error('密码错误')
     }
-    console.log('rst', rst)
   };
 
   return (
